@@ -17,7 +17,7 @@ contract LightAccountFactory is BaseLightAccountFactory {
 
     constructor(address owner, IEntryPoint entryPoint) Ownable(owner) {
         _verifyEntryPointAddress(address(entryPoint));
-        ACCOUNT_IMPLEMENTATION = new LightAccount(entryPoint);
+        ACCOUNT_IMPLEMENTATION = new LightAccount(entryPoint, owner);
         ENTRY_POINT = entryPoint;
     }
 

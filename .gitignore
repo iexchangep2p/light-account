@@ -3,7 +3,8 @@ out/
 cache/
 .env
 
-broadcast/**/run-latest.json
+broadcast/**
+!broadcast/**/run-latest.json
 broadcast/**/dry-run/**/*
 
 .DS_Store
