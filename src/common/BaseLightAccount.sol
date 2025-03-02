@@ -21,10 +21,14 @@ abstract contract BaseLightAccount is BaseAccount, TokenCallbackHandler, UUPSUpg
         CONTRACT_WITH_ADDR
     }
 
-    address public IX_P2P = 0x3B42D1dEF553EE484984C6c3c769BE58005f5d11;
+    mapping(address => bool) public allowedAddresses;
 
-    function setIXP2P(address newIXP2P) external onlyAuthorized {
-        IX_P2P = newIXP2P;
+    function addAllowedAddress(address newAddress) external onlyAuthorized {
+        allowedAddresses[newAddress] = true;
+    }
+
+    function removeAllowedAddress(address addressToRemove) external onlyAuthorized {
+        allowedAddresses[addressToRemove] = false;
     }
 
     error ArrayLengthMismatch();
@@ -38,14 +42,14 @@ abstract contract BaseLightAccount is BaseAccount, TokenCallbackHandler, UUPSUpg
         _;
     }
 
-    modifier onlyAuthorizedDest (address dest) {
+    modifier onlyAuthorizedDest(address dest) {
         _onlyAuthorizedDest(dest);
         _;
     }
 
     function _onlyAuthorizedDest(address dest) internal view {
-        require(dest == IX_P2P, string(abi.encodePacked("Calls to this address are not allowed: ", Strings.toHexString(uint160(dest), 20))));
-       }
+        require(allowedAddresses[dest], string(abi.encodePacked("Calls to this address are not allowed: ", Strings.toHexString(uint160(dest), 20))));
+    }
 
     // solhint-disable-next-line no-empty-blocks
     receive() external payable virtual {}
