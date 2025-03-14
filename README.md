@@ -74,6 +74,23 @@ forge script script/Deploy_LightAccountFactory.s.sol [WALLET_OPTION] --sender [S
 forge script script/Deploy_MultiOwnerLightAccountFactory.s.sol [WALLET_OPTION] --sender [SENDER_ADDRESS] --rpc-url [RPC_URL] -vvvv --broadcast --verify
 ```
 
+## Deploy SingletonLightAccount
+```bash
+forge script script/Deploy_LightAccount.sol [WALLET_OPTION] --sender [SENDER_ADDRESS] --rpc-url [RPC_URL] -vvvv --broadcast --verify
+
+```
+```bash
+forge script script/Deploy_LightAccount.sol  --sender $OWNER --rpc-url $RPC_URL_BaseSepolia -vvvv --broadcast --verify --private-key $DEPLOYER_PRIVATE_KEY
+
+```
+## verify blockscout
+forge verify-contract \
+  --rpc-url https://sepolia.base.org \
+  --verifier blockscout \
+  --verifier-url 'https://base-sepolia.blockscout.com/api/' \
+  0xCEeA278D6b2e18353e6313Ae94389B135Fd4694B \
+  src/LightAccount.sol:LightAccount
+
 Make sure the provided `RPC_URL` is set to an RPC for the chain you wish to deploy on.
 
 ## Generate Inspections
